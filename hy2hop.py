@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""HCloudLab HY2 Hop: Ubuntu 24.04, read-only 3X-UI, dedicated nft NAT."""
+"""HCloudLab HY2 Hop: Ubuntu 24.04+, read-only 3X-UI, dedicated nft NAT."""
 import argparse
 import fcntl
 import json
@@ -41,8 +41,9 @@ def prerequisites():
     if not Path('/run/systemd/system').exists():
         raise RuntimeError('需要 systemd')
     text = Path('/etc/os-release').read_text()
-    if not re.search(r'^ID=ubuntu$', text, re.M) or not re.search(r'^VERSION_ID="?24\.04"?$', text, re.M):
-        raise RuntimeError('V1 仅支持 Ubuntu 24.04')
+    ver = re.search(r'^VERSION_ID="?(\d+)\.(\d+)"?$', text, re.M)
+    if not re.search(r'^ID=ubuntu$', text, re.M) or not ver or (int(ver[1]), int(ver[2])) < (24, 4):
+        raise RuntimeError('仅支持 Ubuntu 24.04 及更新版本（如 26.04）')
     for command in ('systemctl', 'ss', 'ip', 'apt-get'):
         if not shutil.which(command):
             raise RuntimeError(f'缺少系统命令 {command}')

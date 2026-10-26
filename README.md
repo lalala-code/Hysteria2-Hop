@@ -1,10 +1,10 @@
-# HCloudLab · 3X-UI Hysteria2 端口跳跃  V1 — Ubuntu 24.04
+# HCloudLab · 3X-UI Hysteria2 端口跳跃  V1 — Ubuntu 24.04+
 
 ## 适用范围
 
 - 3X-UI 面板中的 Hysteria2 入站：数据库 `protocol=hysteria`
 - 在面板填写 **Hop Ports**，例如 `20000-30000`；脚本只读数据库，不修改 x-ui.db。
-- 只支持 Ubuntu 24.04 + systemd；IPv4，存在全局 IPv6 地址时也创建 IPv6 规则。
+- 支持 Ubuntu 24.04 及更新版本（如 26.04）+ systemd；IPv4，存在全局 IPv6 地址时也创建 IPv6 规则。
 - UFW 开启时自动添加跳跃范围 **和 Hysteria2 实际监听端口** 的 UDP 放行规则；nftables 未安装时从 Ubuntu 软件源自动安装。
   - 这里说的是服务器自身的 UFW，不是 DMIT/其他云厂商控制台里的"安全组"。安全组仍需自己在面板放行跳跃范围和监听端口。
 - 本版本不保证与 Docker 或其他自定义 NAT 规则共存；检测到其他 DNAT/redirect 将安全拒绝安装。
@@ -48,6 +48,7 @@ sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/hcloudlab/Hysteria2
 
 ## 内部验证范围
 
+- **Ubuntu 26.04 等更新版本**：已放开版本检查（原脚本只允许 24.04，26.x 会报 `V1 仅支持 Ubuntu 24.04`）。所用命令（`nft`/`ufw`/`ss`/`ip`/systemd）在新版本上无已知不兼容，但尚未逐项实机验证，安装后请务必执行 `status` 并用客户端实测。
 - Python 语法检查与 31 项 mock/SQLite 自动化测试通过（新增跳跃范围 + 监听端口双 UFW 规则的安装/更新/恢复/状态检查/旧版本升级/失败回滚用例）。
 - 在隔离的 Ubuntu 24.04 容器中，用真实 `ss`/`nft`/`ufw`/`apt-get` 命令（非 mock）端到端跑通了完整的
   `install → status → update ×3（确认幂等、规则不重复）→ restore` 流程，并单独确认：
