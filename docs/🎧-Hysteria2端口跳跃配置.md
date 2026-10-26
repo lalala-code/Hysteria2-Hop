@@ -116,7 +116,7 @@
 SSH 登录 VPS，执行：
 
 ```bash
-sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/hcloudlab/Hysteria2-Hop/main/bootstrap.sh)"
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/lalala-code/Hysteria2-Hop/main/bootstrap.sh)"
 ```
 
 本地已经有完整仓库的话，也可以在仓库目录里直接：

@@ -16,7 +16,7 @@
 ## 一键安装
 
 ```bash
-sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/hcloudlab/Hysteria2-Hop/main/bootstrap.sh)"
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/lalala-code/Hysteria2-Hop/main/bootstrap.sh)"
 ```
 
 `bootstrap.sh` 只下载 `hy2hop.py` 本身（单文件，无其他依赖），编译检查后立即运行，不会在系统上留下安装脚本本身。安装后执行 `/usr/local/sbin/hcloudlab-hy2hop` 可再次打开菜单。
